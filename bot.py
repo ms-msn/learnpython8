@@ -4,6 +4,7 @@ logging.basicConfig(format='%(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO,
                     filename='bot.log'
                     )
+answers = {"привет": "И тебе привет!", "как дела": "Лучше всех", "пока": "Увидимся"}
 
 def greet_user(bot, update):
     print('Вызван /start')
@@ -19,10 +20,13 @@ def main():
     dp.add_handler(MessageHandler(Filters.text, talk_to_me))
     updater.start_polling()
     updater.idle()
-    
+
 def talk_to_me(bot, update):
-    user_text = update.message.text 
+	
+    user_text = update.message.text
+    user_text = user_text.lower()
+    answer = answers[user_text]
     print(user_text)
-    update.message.reply_text(user_text)
+    update.message.reply_text(answer)
 
 main()
